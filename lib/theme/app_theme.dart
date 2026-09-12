@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 /// Ink / ochre / rust palette pulled from paddock + saleyard-board materials,
 /// matching the validated web prototype rather than a generic app palette.
@@ -21,6 +20,11 @@ class AppColors {
 
 /// Oswald for condensed sign-painted headings, Inter for UI body copy,
 /// IBM Plex Mono for numbers — weight, price and distance are the product.
+///
+/// All three are bundled as local assets (see pubspec.yaml) rather than
+/// fetched at runtime, so text renders reliably without network access.
+/// Oswald and Inter are variable fonts; the visual weight comes from the
+/// `wght` font variation rather than from separate font files per weight.
 class AppFonts {
   static TextStyle oswald({
     double fontSize = 14,
@@ -28,7 +32,9 @@ class AppFonts {
     Color color = AppColors.ink,
     double? letterSpacing,
   }) =>
-      GoogleFonts.oswald(
+      TextStyle(
+        fontFamily: 'Oswald',
+        fontVariations: [FontVariation('wght', fontWeight.value.toDouble())],
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
@@ -40,7 +46,9 @@ class AppFonts {
     FontWeight fontWeight = FontWeight.w400,
     Color color = AppColors.ink,
   }) =>
-      GoogleFonts.inter(
+      TextStyle(
+        fontFamily: 'Inter',
+        fontVariations: [FontVariation('wght', fontWeight.value.toDouble())],
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
@@ -51,7 +59,8 @@ class AppFonts {
     FontWeight fontWeight = FontWeight.w600,
     Color color = AppColors.ink,
   }) =>
-      GoogleFonts.ibmPlexMono(
+      TextStyle(
+        fontFamily: 'IBMPlexMono',
         fontSize: fontSize,
         fontWeight: fontWeight,
         color: color,
@@ -66,6 +75,6 @@ ThemeData buildAppTheme() {
       seedColor: AppColors.ochre,
       brightness: Brightness.light,
     ),
-    textTheme: GoogleFonts.interTextTheme(),
+    fontFamily: 'Inter',
   );
 }
